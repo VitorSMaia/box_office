@@ -11,8 +11,9 @@
                 <p class="truncate">
                     {{ $itemEvent['description'] }}
                 </p>
-                <div class="flex justify-end items-center">
+                <div class="flex justify-end items-center gap-x-2">
                     <x-button wire:click="open('event.card', {{ $itemEvent['id'] }})">Visualizar</x-button>
+                    <a class="button" href="{{ route('events') }}" >Comprar</a>
                 </div>
             </div>
         @endforeach
