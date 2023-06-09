@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
          \App\Models\User::factory(1)->create();
 
-         User::query()->findOrFail(1)->assignRole('Administrador');
+//         User::query()->findOrFail(1)->assignRole('Administrador');
 //         \App\Models\User::factory()->create([
 //             'name' => 'Test User',
 //             'email' => 'test@example.com',
