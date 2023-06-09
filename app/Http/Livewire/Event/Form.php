@@ -55,7 +55,7 @@ class Form extends Component
 
     public function save()
     {
-        $eventController = new EventController;
+        $eventController = new EventController
 
         $eventControllerReturn = $eventController->updateOrCreate($this->event_id,$this->state);
 
