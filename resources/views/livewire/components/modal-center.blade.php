@@ -39,22 +39,21 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                <div class="flex justify-end items-end w-full ">
+                    <button wire:click="close" class=" px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs
+                        text-white uppercase hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none
+                        focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        close
+                    </button>
+                </div>
 
-            <div class="flex justify-end items-end w-full ">
-                <button wire:click="close" class=" px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs
-    text-white uppercase hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none
-    focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                    close
-                </button>
-            </div>
             @if($component)
-
                 @livewire($component,['id' => $idParameter])
             @endif
             @if($showDropModal)
                 <div class="flex flex-col gap-5 ">
                     <h2 class="col-span-12 font-semibold text-xl text-gray-800 leading-tight">
-                        {{ __('Event') }}
+                        {{ __('Deletar evento') }}
                     </h2>
                     <p>Você gostaria de deletar o item selecionado? </p>
                     <p>Essa ação é irreversível

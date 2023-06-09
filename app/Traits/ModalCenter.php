@@ -19,9 +19,9 @@ trait ModalCenter
         $this->emit('openModalDropCenter', $id, $listener);
     }
 
-    public function openToast($message = null)
+    public function openToast($message = null, $icon = null, $color = null)
     {
-        $this->emit('openToast', $message);
+        $this->emit('openToast', $message, $icon, $color);
     }
     public function closeToast()
     {

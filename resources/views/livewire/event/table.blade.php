@@ -7,7 +7,7 @@
                         {{ $itemEvent['name'] }}
                     </span>
                     @if(Auth::user()->can('delete_events'))
-                        <x-button wire:click="drop({{ $itemEvent['id'] }})" class="text-red-500 cursor-pointer material-symbols-outlined">
+                        <x-button wire:click="drop({{ $itemEvent['id'] }}, 'dropEvent')" class="text-red-500 cursor-pointer material-symbols-outlined">
                             Delete
                         </x-button>
                     @endif
@@ -17,7 +17,7 @@
                 <p class="truncate">
                     {{ $itemEvent['description'] }}
                 </p>
-                <div class="flex justify-around items-center">
+                <div class="flex justify-end items-center gap-x-2">
                     @if(Auth::user()->can('update_events'))
                         <x-button wire:click="open('event.form', {{ $itemEvent['id'] }})">Editar</x-button>
                     @endif

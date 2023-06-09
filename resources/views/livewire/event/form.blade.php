@@ -4,7 +4,7 @@
     </div>
     <form wire:submit.prevent="save" class="grid grid-cols-12 gap-5">
         <h2 class="col-span-12 font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Event') }}
+            {{ $event_id ? 'Editar evento' : 'Cadastrar  evento' }}
         </h2>
 
         <label class="col-span-6 flex flex-col" for="name">
@@ -14,7 +14,7 @@
 
         <label class="col-span-6 flex flex-col" for="image">
             <span>Image</span>
-            <input id="image" model="image" wire:model.defer="state.image"  type="text"/>
+            <x-input id="image" model="image" wire:model.defer="state.image"  type="text"/>
         </label>
 
 {{--        <div class="col-span-12 flex flex-col">--}}
@@ -25,7 +25,7 @@
 
         <label class="col-span-12 flex flex-col" for="description">
             <span>Descrição</span>
-            <x-textarea wire:model.defer="state.description"  model="description" placeholder="write your annotations" />
+            <x-textarea wire:model.defer="state.description"  model="description"  />
         </label>
 
         <label class="col-span-12">
@@ -51,38 +51,27 @@
 
         <label class="col-span-12 flex flex-col" for="value">
             <span>Valor do Ingresso </span>
-            <input x-mask:dynamic="$input.startsWith('34') ? '999,99' : '999,99'" placeholder="0.00" id="value" {{ !is_null($event_id) ? 'disabled' : 'false' }}  model="value" wire:model.defer="state.value"  type="text" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  disabled:bg-gray-800/25"/>
+            <input x-mask:dynamic="$money($input, ',', ' ')" placeholder="0.00" id="value" {{ !is_null($event_id) ? 'disabled' : 'false' }}  model="value" wire:model.defer="state.value"  type="text" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm  disabled:bg-gray-800/25"/>
             @error('value')
                 <p class="text-sm text-red-600">{{ $message }}</p>
             @enderror
         </label>
 
-        <label class="col-span-12 flex flex-col" for="ticket">
-            <span>Quantos ingressos por horário:</span>
-        </label>
+        @if(!$event_id)
+            <label class="col-span-12 flex flex-col" for="ticket">
+                <span>Quantos ingressos por horário:</span>
+            </label>
 
-        @foreach($schedules as $key => $schedule)
-            <div class="col-span-4 ">
-                <div class="flex flex-col">
-                    <span>Entre {{ $schedule }}:00 e  {{ $schedule + 1 }}:00</span>
-                    <input id="ticket" {{ !is_null($event_id) ? 'disabled' : 'false' }}  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm disabled:bg-gray-800/25" wire:model.defer="state.ticket.{{ $schedule }}" min="0" max="500" type="number"/>
+            @foreach($schedules as $key => $schedule)
+                <div class="col-span-4 ">
+                    <div class="flex flex-col">
+                        <span>Entre {{ $schedule }}:00 e  {{ $schedule + 1 }}:00</span>
+                        <input id="ticket" {{ !is_null($event_id) ? 'disabled' : 'false' }}  class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm disabled:bg-gray-800/25" wire:model.defer="state.tickets.{{ $schedule }}" min="0" max="500" type="number"/>
+                    </div>
                 </div>
-                @if ($errors)
-                    <span>{{$errors}}</span>
-                @endif
-{{--                @error()--}}
-{{--                <p class="text-sm text-red-600">{{ $message }}</p>--}}
-{{--                @enderror--}}
-            </div>
-        @endforeach
+            @endforeach
+        @endif
 
         <x-button class="col-span-12" >{{ $event_id ? 'Editar' : 'Salvar' }}</x-button>
     </form>
-    <script src="!src">
-        function creditCardMask(input) {
-            return
-        }
-    </script>
-
-
 </div>

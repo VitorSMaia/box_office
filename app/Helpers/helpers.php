@@ -13,3 +13,12 @@ if (!function_exists('formart_date')) {
         return Carbon::parse($date)->format('d/m/Y');
     }
 }
+
+if (!function_exists('formart_decimal')) {
+    function formart_decimal($value)
+    {
+        return 'R$ ' . str_replace('.', ',', $value);
+    }
+}
+
+

@@ -11,14 +11,20 @@
         </label>
         <label class="col-span-6 flex flex-col" for="date">
             <span>Data do evento</span>
-            <x-input id="date" model="date" wire:model.defer="state.date" min="{{ $event['initial_validity'] }}" max="{{ $event['final_validity'] }}"  type="date" />
+            <x-input id="date" model="date" wire:model="state.date" min="{{ now()->format('Y-m-d') }}" max="{{ $event['final_validity'] }}"  type="date" />
         </label>
         <label class="col-span-6 flex flex-col" for="hour">
             <span>Hora do evento</span>
             <select id="hour" model="hour" wire:model.defer="state.hour" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                 <option value="">Selecione...</option>
                 @foreach($hours as $key => $itemHour)
-                    <option value="{{ $key }}">Evento das {{ $key }}:00 até {{ $key + 1 }}:00</option>
+                    @if($state['date'] == now()->format('Y-m-d'))
+                        @if($key > now()->format('H'))
+                            <option value="{{ $key }}">Evento das {{ $key }}:00 até {{ $key + 1 }}:00</option>
+                       @endif
+                    @elseif(!is_null($state['date']))
+                        <option value="{{ $key }}">Evento das {{ $key }}:00 até {{ $key + 1 }}:00</option>
+                    @endif
                 @endforeach
             </select>
             @error('hour')

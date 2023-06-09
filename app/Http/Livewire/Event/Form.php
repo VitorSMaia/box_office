@@ -36,19 +36,7 @@ class Form extends Component
 
         if($eventControllerReturn['status'] == 'success') {
 
-            $array = [];
-            $array2 = [];
-
-            foreach ($eventControllerReturn['data']['tickets'] as $key => $item) {
-                $array[$item['hour']][] = $item;
-            }
-
-            foreach ($array as $key => $item) {
-                $array2[$key] = count($item);
-            }
-
-            $eventControllerReturn['data']['ticket'] = $array2;
-
+            $eventControllerReturn['data']['value'] = formart_decimal($eventControllerReturn['data']['value']);
             $this->state = $eventControllerReturn['data'];
         }
     }
@@ -60,9 +48,13 @@ class Form extends Component
         $eventControllerReturn = $eventController->updateOrCreate($this->event_id,$this->state);
 
         if($eventControllerReturn['status'] === 'success') {
-            $this->close();
-            $this->emit('refreshEventTable');
+            $this->openToast('Role cadastrado/editado com sucesso!', 'check_circle', 'green');
+        } else {
+            $this->openToast('Role não cadastrado!', 'delete', 'red');
         }
+
+        $this->emit('refreshEventTable');
+        $this->close();
     }
     public function render()
     {

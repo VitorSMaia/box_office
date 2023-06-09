@@ -17,7 +17,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($roles as $itemRole)
+                        @foreach($users as $itemUser)
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
                                     <div class="flex items-center">
@@ -28,30 +28,25 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $itemRole['name'] }}
+                                                {{ $itemUser['name'] }}
                                             </p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
-                                    @if(Auth::user()->can('create_permissions'))
-                                        <x-button wire:click="open('permissions.form',{{ $itemRole['id'] }})">Editar</x-button>
+                                    @if(Auth::user()->can('update_users'))
+                                        <x-button wire:click="open('users.form',{{ $itemUser['id'] }})">Editar</x-button>
                                     @endif
-                                    @if(Auth::user()->can('update_permissions'))
-                                        <x-button wire:click="open('permissions.permission', {{ $itemRole['id'] }})">Permissões</x-button>
-                                    @endif
-                                    @if(Auth::user()->can('delete_permissions') && $itemRole['id'] !== 1)
-                                        <x-button wire:click="drop({{ $itemRole['id'] }}, 'dropRole')">Deletar</x-button>
+                                    @if(Auth::user()->can('delete_users') && $itemUser['id'] !== Auth::user()->id)
+                                        <x-button wire:click="drop({{ $itemUser['id'] }}, 'dropUser')">Deletar</x-button>
                                     @endif
                                 </td>
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

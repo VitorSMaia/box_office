@@ -40,10 +40,13 @@ class Form extends Component
         $roleControllerReturn = $roleController->updateOrCreate($this->role_id, $this->state);
 
         if($roleControllerReturn['status'] === 'success') {
-            $this->openToast('Role Cadastrador');
-            $this->close();
-            $this->emit('refreshPermissionTable');
+            $this->openToast('Role cadastrado/editado com sucesso!', 'check_circle', 'green');
+        } else {
+            $this->openToast('Role não cadastrado!', 'delete', 'red');
         }
+
+        $this->close();
+        $this->emit('refreshPermissionTable');
     }
 
     public function render()

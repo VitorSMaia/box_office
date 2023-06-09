@@ -6,11 +6,11 @@
 
         <div class="col-span-12">
             @foreach($groupPermission as $itemGroupPermission)
-                <h1>{{ $itemGroupPermission['name'] }} . {{ $itemGroupPermission['id'] }}</h1>
+                <h1>{{ $itemGroupPermission['name'] }}</h1>
                 @foreach($itemGroupPermission['permissons'] as $key => $itemPermission)
                     <label class="flex justify-start items-center gap-x-2" for="">
                         <input wire:model.defer="state.groupPermission" value="{{ $itemPermission['id'] }}" type="checkbox"/>
-                        <span>{{ $itemPermission['label'] }} . {{ $itemPermission['id'] }}</span>
+                        <span>{{ $itemPermission['label'] }}</span>
                     </label>
                 @endforeach
             @endforeach

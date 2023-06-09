@@ -64,44 +64,58 @@ class EventController extends Controller
         }
 
         $validatorRequest = Validator::make($request, [
-            'final_validity' => 'required',
-            'initial_validity' => 'required',
             'image' => 'required',
             'description' => 'required',
             'name' => 'required',
+            'final_validity' => 'required',
+            'initial_validity' => 'required',
             'value' => 'required|numeric',
-            'ticket.*' => 'sometimes',
+            'tickets.*' => 'sometimes',
         ])->validate();
-
         try {
             DB::beginTransaction();
             $event['name'] = $validatorRequest['name'];
             $event['description'] = $validatorRequest['description'];
-            $event['image'] = $validatorRequest['image'] ?? 'asd';
-            $event['initial_validity'] = $validatorRequest['initial_validity'];
-            $event['final_validity'] = $validatorRequest['final_validity'];
-            $event['value'] = $validatorRequest['value'];
+            $event['image'] = $validatorRequest['image'];
 
             $eventDB = new Event();
 
             if($idEvent) {
-                $eventDB = $eventDB->find($idEvent)->update($event);
+                $eventDB = $eventDB->findOrFail($idEvent)->update($event);
             }else {
+                $event['initial_validity'] = $validatorRequest['initial_validity'];
+                $event['final_validity'] = $validatorRequest['final_validity'];
+                $event['value'] = $validatorRequest['value'];
+
+                $origin = date_create($event['initial_validity']);
+                $target = date_create($event['final_validity']);
+                $interval = date_diff($origin, $target);
+
+                $days =  $interval->format('%a');
+
+                $diference_days = (int)$days + 1;
+                $tickets = $request['tickets'];
+
                 $eventDB = $eventDB->create($event);
 
-                $tickets = $request['ticket'];
                 $ticketDB = Ticket::query();
 
                 $event_id = $idEvent ?? $eventDB->id;
-                foreach ($tickets as $key => $itemTickets) {
-                    for ($i = 0; $i < $itemTickets; $i++) {
-                        $itemTicketDB =  [
-                            'event_id' => $event_id,
-                            'hour' => $key,
-                        ];
-                        $ticketDB->updateOrCreate($itemTicketDB);
+
+                for ($i = 0; $i < $diference_days; $i++) {
+                    foreach ($tickets as $key => $itemTickets) {
+                        for ($j = 0; $j < (int)$itemTickets; $j++) {
+                            $itemTicketDB =  [
+                                'event_id' => $event_id,
+                                'hour' => $key,
+//                                'event_date' => $origin->format('Y-m-') . ($origin->format('d')+1),
+                            ];
+                            $ticketDB->create($itemTicketDB);
+                        }
+
                     }
                 }
+
             }
 
             DB::commit();
@@ -185,6 +199,7 @@ class EventController extends Controller
             $ticketDB->update([
                 'user_id' => Auth::user()->id,
                 'buy_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                'event_date' => $validatorRequest['date'],
                 'ticket_number' => $ticket_number
             ]);
 

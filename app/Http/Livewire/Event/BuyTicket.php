@@ -13,7 +13,7 @@ class BuyTicket extends Component
     public $event_id;
     public $event;
     public $state = [
-        'date' => '',
+        'date' => null,
         'hour' => ''
     ];
 

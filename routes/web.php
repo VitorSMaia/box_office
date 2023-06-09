@@ -28,7 +28,9 @@ Route::view('eventos','events')->middleware(['auth', 'verified'])->name('events'
 
 Route::view('bilhetes', 'tickets')->middleware(['auth', 'verified'])->name('tickets');
 
-Route::view('permissões', 'permissions')->middleware(['auth', 'verified'])->name('permissions');
+Route::view('permissoes', 'permissions')->middleware(['auth', 'verified'])->name('permissions');
+
+Route::view('usuarios', 'users')->middleware(['auth', 'verified'])->name('users');
 
 
 Route::middleware('auth')->group(function () {
