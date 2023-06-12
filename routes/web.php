@@ -1,11 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
-use App\Models\GroupPermission;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +29,17 @@ Route::view('bilhetes', 'tickets')->middleware(['auth', 'verified'])->name('tick
 Route::view('permissoes', 'permissions')->middleware(['auth', 'verified'])->name('permissions');
 
 Route::view('usuarios', 'users')->middleware(['auth', 'verified'])->name('users');
+
+Route::get('show/{id}', function ($image = 'ss') {
+    $path = $image;
+
+    $imageContents = Storage::disk('s3')->get($path); // Recupera o conteúdo da imagem
+
+    return Response::make($imageContents, 200, [
+        'Content-Type' => 'image/jpeg',
+        'Content-Disposition' => 'inline; filename="imagem.jpg"',
+    ]);
+})->name('show.image');
 
 
 Route::middleware('auth')->group(function () {

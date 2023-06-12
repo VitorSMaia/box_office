@@ -32,7 +32,7 @@ class SendEmail extends Mailable
     {
         return new Envelope(
             subject: 'Confirmação de Compra - Ingressos para o Evento de Arte',
-            from: 'jeffrey@example.com',
+            from: env('MAIL_FROM_ADDRESS'),
         );
     }
 

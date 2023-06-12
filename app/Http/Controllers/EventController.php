@@ -70,8 +70,11 @@ class EventController extends Controller
             'final_validity' => 'required',
             'initial_validity' => 'required',
             'value' => 'required|numeric',
-            'tickets.*' => 'sometimes',
+            'tickets.*' => 'required',
+        ], [
+            'tickets.*' => 'O valor deve ser preenchido corretamente.'
         ])->validate();
+
         try {
             DB::beginTransaction();
             $event['name'] = $validatorRequest['name'];
@@ -136,11 +139,14 @@ class EventController extends Controller
     }
 
     public function delete($idEvent = null) {
+
         try {
             DB::beginTransaction();
             Ticket::query()->where('event_id', $idEvent)->delete();
-            $eventDB = Event::query()->findOrFail($idEvent)->delete();
+            $eventDB = Event::query()->findOrFail($idEvent);
 
+            Storage::drive('s3')->delete($eventDB['image']);
+            $eventDB->delete();
 
             if($eventDB) {
                 DB::commit();

@@ -13,7 +13,7 @@
                     @endif
 
                 </div>
-                <img class="w-full h-40 bg-cover" src="{{ $itemEvent['image'] }}" alt="{{ $itemEvent['name'] }}">
+                <img class="w-full h-60 object-contain bg-contain"  src="{{  route('show.image', ['id' => $itemEvent['image']]) }}" alt="{{ $itemEvent['name'] }}">
                 <p class="truncate">
                     {{ $itemEvent['description'] }}
                 </p>

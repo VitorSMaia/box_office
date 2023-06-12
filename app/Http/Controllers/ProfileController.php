@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $request->user()->fill($request->validated());
 
         $user = User::query()->findOrFail(Auth::user()->id);
-        $user->syncRoles($request->roles);
+        $user->assignRole($request->roles);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

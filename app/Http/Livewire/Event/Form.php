@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Event;
 
 use App\Http\Controllers\EventController;
 use App\Traits\ModalCenter;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -11,15 +12,22 @@ class Form extends Component
 {
     use ModalCenter, WithFileUploads;
 
-    public $schedules = [
-        9,10,11,12,13,14,15,16,17
-    ];
-
     public $event_id = null;
+    public $updateImage = null;
+    public $isUploading = false;
 
     public $state = [
-        'ticket' => [],
-//        'image' => null
+        'tickets' => [
+            9 => 0,
+            10 => 0,
+            11 => 0,
+            12 => 0,
+            13 => 0,
+            14 => 0,
+            15 => 0,
+            16 => 0,
+            17 => 0,
+        ]
     ];
 
     public function mount($id = null)
@@ -41,8 +49,30 @@ class Form extends Component
         }
     }
 
+    public function random_string($length) {
+        $str = random_bytes($length);
+        $str = base64_encode($str);
+        $str = str_replace(["+", "/", "="], "", $str);
+        $str = substr($str, 0, $length);
+        return $str;
+    }
+
+    public function UpdatedStateImage()
+    {
+        $this->updateImage = true;
+    }
+
     public function save()
     {
+        if(isset($this->state['image'])) {
+            $file = $this->state['image'];
+
+            $path = Storage::disk('s3')->put('/', $file);
+
+            $this->state['image'] = $path;
+
+        }
+
         $eventController = new EventController;
 
         $eventControllerReturn = $eventController->updateOrCreate($this->event_id,$this->state);

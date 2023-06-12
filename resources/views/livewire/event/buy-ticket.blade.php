@@ -1,5 +1,5 @@
 <div>
-    <div wire:loading wire:target="save" class="bg-gray-500/75 w-screen h-screen absolute z-10 transform transition-all">
+    <div wire:loading wire:target="save" class="bg-gray-500/75 w-screen h-[400px] -top-5 left-0 absolute z-50 transform transition-all">
         <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-28 w-28 absolute top-20 left-72"></div>
     </div>
     <form wire:submit.prevent="save" class="grid grid-cols-12 gap-5">

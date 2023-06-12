@@ -4,7 +4,7 @@
             {{ $event['name'] }}
         </span>
     </div>
-    <img class="w-full h-60 bg-cover" src="{{ $event['image'] }}" alt="{{ $event['name'] }}">
+    <img  class="w-full h-60 object-contain bg-contain" src="{{  route('show.image', ['id' => $event['image']]) }}" alt="{{ $event['name'] }}">
     <p> <span class="font-semibold">Início da exposição:</span> {{ formart_date($event['initial_validity']) }}</p>
     <p> <span class="font-semibold">Último dia:</span> {{ formart_date($event['final_validity']) }}</p>
     <p> <span class="font-semibold">Valor da entrada:</span> {{ formart_decimal($event['value']) }}</p>

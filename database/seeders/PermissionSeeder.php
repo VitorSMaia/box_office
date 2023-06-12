@@ -119,6 +119,10 @@ class PermissionSeeder extends Seeder
                 ]);
                 $role = Role::query()->findOrFail(1);
                 $role->givePermissionTo($item['name']);
+                if($item['name'] == 'buy_events' || $item['name'] == 'list_tickets' || $item['name'] == 'list_events') {
+                    $role = Role::query()->findOrFail(2);
+                    $role->givePermissionTo($item['name']);
+                }
             }
 
         }

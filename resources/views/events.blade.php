@@ -7,7 +7,6 @@
             @livewire('components.button', ['Cadastrar','event.form'])
         @endif
     </x-slot>
-
     <div class="py-12 px-5">
         <div class="mx-auto sm:px-6 lg:px-8">
             @if(Auth::user()->can('list_events'))

@@ -44,10 +44,10 @@ class ModalCenter extends Component
 
     public function close()
     {
+        $this->showDropModal = false;
         $this->show = false;
-
-        $this->idParameter = null;
         $this->component = null;
+        $this->idParameter = null;
     }
 
     public function render()

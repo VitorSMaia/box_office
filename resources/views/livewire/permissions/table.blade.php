@@ -40,9 +40,9 @@
                                     @if(Auth::user()->can('update_permissions'))
                                         <x-button wire:click="open('permissions.permission', {{ $itemRole['id'] }})">Permissões</x-button>
                                     @endif
-                                    @if(Auth::user()->can('delete_permissions') && $itemRole['id'] !== 1)
-                                        <x-button wire:click="drop({{ $itemRole['id'] }}, 'dropRole')">Deletar</x-button>
-                                    @endif
+{{--                                    @if(Auth::user()->can('delete_permissions') && $itemRole['id'] !== 1)--}}
+{{--                                        <x-button wire:click="drop({{ $itemRole['id'] }}, 'dropRole')">Deletar</x-button>--}}
+{{--                                    @endif--}}
                                 </td>
                             </tr>
                         @endforeach
