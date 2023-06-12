@@ -93,7 +93,6 @@ class EventController extends Controller
                 $validatorRequest['image'] = $path;
             }
 
-
             if($idEvent) {
 
                 $eventDB->update($validatorRequest);

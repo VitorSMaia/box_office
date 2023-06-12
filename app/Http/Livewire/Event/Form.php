@@ -44,17 +44,9 @@ class Form extends Component
 
         if($eventControllerReturn['status'] == 'success') {
 
-            $eventControllerReturn['data']['value'] = formart_decimal($eventControllerReturn['data']['value']);
             $this->state = $eventControllerReturn['data'];
+            $this->state['value'] = formart_decimal($eventControllerReturn['data']['value'], true);
         }
-    }
-
-    public function random_string($length) {
-        $str = random_bytes($length);
-        $str = base64_encode($str);
-        $str = str_replace(["+", "/", "="], "", $str);
-        $str = substr($str, 0, $length);
-        return $str;
     }
 
     public function UpdatedStateImage()
@@ -64,11 +56,6 @@ class Form extends Component
 
     public function save()
     {
-        if(isset($this->state['image'])) {
-
-
-        }
-
         $eventController = new EventController;
 
         $eventControllerReturn = $eventController->updateOrCreate($this->event_id,$this->state);

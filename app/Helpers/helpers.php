@@ -15,10 +15,12 @@ if (!function_exists('formart_date')) {
 }
 
 if (!function_exists('formart_decimal')) {
-    function formart_decimal($value)
+    function formart_decimal($value, $alpine = false)
     {
-        return 'R$ ' . str_replace('.', ',', $value);
+        if($alpine) {
+            return str_replace('.', ',', $value);
+        }else {
+            return 'R$ ' . str_replace('.', ',', $value);
+        }
     }
 }
-
-
