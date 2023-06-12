@@ -8,8 +8,8 @@ class Toast extends Component
 {
     public $message = null;
     public $show = false;
-    public $color = '';
-    public $icon = 'check_circle';
+//    public $color = '';
+//    public $icon = 'check_circle';
 
     protected $listeners = [
         'openToast' => 'open',

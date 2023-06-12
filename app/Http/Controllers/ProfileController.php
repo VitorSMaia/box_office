@@ -42,7 +42,7 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $request->user()->update();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

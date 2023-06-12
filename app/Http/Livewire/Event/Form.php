@@ -65,11 +65,7 @@ class Form extends Component
     public function save()
     {
         if(isset($this->state['image'])) {
-            $file = $this->state['image'];
 
-            $path = Storage::disk('s3')->put('/', $file);
-
-            $this->state['image'] = $path;
 
         }
 
@@ -78,9 +74,9 @@ class Form extends Component
         $eventControllerReturn = $eventController->updateOrCreate($this->event_id,$this->state);
 
         if($eventControllerReturn['status'] === 'success') {
-            $this->openToast('Role cadastrado/editado com sucesso!', 'check_circle', 'green');
+            $this->openToast('Evento cadastrado/editado com sucesso!', 'check_circle', 'green');
         } else {
-            $this->openToast('Role não cadastrado!', 'delete', 'red');
+            $this->openToast('Evento não cadastrado!', 'delete', 'red');
         }
 
         $this->emit('refreshEventTable');

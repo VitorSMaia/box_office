@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Validator;
 class EventController extends Controller
 {
     public function index($search = null) {
+//            Mail::to('vitor.smaia1@gmail.com')->send(new SendEmail());
         try {
             DB::beginTransaction();
             $eventDB = Event::query()
                 ->where('status', 'Ativo')->get();
+
 
             DB::commit();
             return [
@@ -77,21 +79,28 @@ class EventController extends Controller
 
         try {
             DB::beginTransaction();
-            $event['name'] = $validatorRequest['name'];
-            $event['description'] = $validatorRequest['description'];
-            $event['image'] = $validatorRequest['image'];
-
-            $eventDB = new Event();
 
             if($idEvent) {
-                $eventDB = $eventDB->findOrFail($idEvent)->update($event);
-            }else {
-                $event['initial_validity'] = $validatorRequest['initial_validity'];
-                $event['final_validity'] = $validatorRequest['final_validity'];
-                $event['value'] = $validatorRequest['value'];
+                $eventDB = new Event();
+                $eventDB = $eventDB->findOrFail($idEvent);
+            }
 
-                $origin = date_create($event['initial_validity']);
-                $target = date_create($event['final_validity']);
+            if( isset($eventDB) && $validatorRequest['image'] !== $eventDB['image']) {
+                $file = $validatorRequest['image'];
+
+                $path = Storage::disk('s3')->put('/', $file);
+
+                $validatorRequest['image'] = $path;
+            }
+
+
+            if($idEvent) {
+
+                $eventDB->update($validatorRequest);
+            }else {
+
+                $origin = date_create($validatorRequest['initial_validity']);
+                $target = date_create($validatorRequest['final_validity']);
                 $interval = date_diff($origin, $target);
 
                 $days =  $interval->format('%a');
@@ -99,7 +108,14 @@ class EventController extends Controller
                 $diference_days = (int)$days + 1;
                 $tickets = $request['tickets'];
 
-                $eventDB = $eventDB->create($event);
+                $file = $validatorRequest['image'];
+
+                $path = Storage::disk('s3')->put('/', $file);
+
+                $validatorRequest['image'] = $path;
+
+                $eventDB = new Event();
+                $eventDB = $eventDB->create($validatorRequest);
 
                 $ticketDB = Ticket::query();
 

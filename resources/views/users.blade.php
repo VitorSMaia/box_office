@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Lista de Usuários') }}
+            {{ __('Lista de usuários') }}
         </h2>
 {{--        @if(Auth::user()->can('create_users'))--}}
 {{--            @livewire('components.button', ['Cadastrar','permissions.form'])--}}
