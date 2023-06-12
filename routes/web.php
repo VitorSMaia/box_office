@@ -41,6 +41,13 @@ Route::get('show/{id}', function ($image = 'ss') {
     ]);
 })->name('show.image');
 
+Route::get('test', function () {
+    $files = Storage::disk('s3')->files();
+    foreach ($files as $file) {
+        echo $file . "<br>";
+    }
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
