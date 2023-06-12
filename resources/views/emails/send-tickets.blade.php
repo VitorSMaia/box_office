@@ -32,35 +32,52 @@
         }
     </style>
 </head>
-<body style="background-color: black">
+<body>
 
 <main>
-    <p>Prezado(a) {{ $data['user']['name'] }},</p>
+    <table cellpadding="0" cellspacing="0" class="es-content esd-header-popover" align="center">
+        <tbody>
+        <tr>
+            <td class="esd-stripe" align="center">
+                <table bgcolor="rgba(0, 0, 0, 0)" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: transparent;">
+                    <tbody>
+                    <tr>
+                        <p>Prezado(a) {{ $data['user']['name'] }},</p>
+                    </tr>
+                    <tr><span><b>Detalhes da compra:</b></span></tr>
+                    <tr><span><b>Evento:</b> {{ $data['event']['name'] }}</span></tr>
+                    <tr><span><b>Data:</b> {{ formart_date($data['event_date']) }}</span></tr>
+                    <tr><span><b>Horário:</b> {{ $data['hour'] }}:00</span></tr>
 
-    <p>Agradecemos por adquirir os ingressos para o tão aguardado Evento de Arte! É com grande prazer que informamos que sua compra foi concluída com sucesso. Agora, você está pronto para vivenciar uma experiência artística incrível!
-    </p>
-
-    <ul class="detailTicket">
-        <li>Detalhes da compra:</li>
-        <li>Evento: {{ $data['event']['name'] }}</li>
-        <li>Data: {{ formart_date($data['event_date']) }}</li>
-        <li>Horário: {{ $data['hour'] }}:00</li>
-    </ul>
-
-
-
-
-    <div style="display: flex; flex-direction: column;">
-        <a>Atenciosamente,</a>
-        <a>João Vitor</a>
-    </div>
+                    <tr>
+                        <p>
+                            Agradecemos por adquirir os ingressos para o tão aguardado Evento de Arte!
+                            É com grande prazer que informamos que sua compra foi concluída com sucesso.
+                            Agora, você está pronto para vivenciar uma experiência artística incrível!
+                        </p>
+                    </tr>
+                    <tr>
+                        <div style="display: flex; flex-direction: column;">
+                            <a>Atenciosamente,</a>
+                            <a>João Vitor</a>
+                        </div>
+                    </tr>
+                    <tr>
+                        <span class="textInfo">
+                            Os ingressos foram enviados para o endereço de e-mail registrado em sua conta, juntamente com este e-mail. Certifique-se de verificar sua caixa de entrada e também a pasta de spam, caso necessário. Os ingressos estarão em formato PDF, prontos para impressão.
+                            Ao comparecer ao evento, lembre-se de levar seus ingressos impressos ou apresentar o código de barras diretamente em seu smartphone. Pedimos que chegue com antecedência para evitar qualquer inconveniente.
+                            Se tiver alguma dúvida ou precisar de assistência adicional, nossa equipe de atendimento ao cliente estará pronta para ajudá-lo. Não hesite em nos contatar através do número [Número de telefone] ou do e-mail [Endereço de e-mail de suporte].
+                            Agradecemos novamente por sua compra e esperamos que aproveite o Evento de Arte ao máximo. Prepare-se para se encantar com as diversas formas de expressão artística que serão apresentadas!
+                        </span>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 
-<span class="textInfo">
-        Os ingressos foram enviados para o endereço de e-mail registrado em sua conta, juntamente com este e-mail. Certifique-se de verificar sua caixa de entrada e também a pasta de spam, caso necessário. Os ingressos estarão em formato PDF, prontos para impressão.
-        Ao comparecer ao evento, lembre-se de levar seus ingressos impressos ou apresentar o código de barras diretamente em seu smartphone. Pedimos que chegue com antecedência para evitar qualquer inconveniente.
-        Se tiver alguma dúvida ou precisar de assistência adicional, nossa equipe de atendimento ao cliente estará pronta para ajudá-lo. Não hesite em nos contatar através do número [Número de telefone] ou do e-mail [Endereço de e-mail de suporte].
-        Agradecemos novamente por sua compra e esperamos que aproveite o Evento de Arte ao máximo. Prepare-se para se encantar com as diversas formas de expressão artística que serão apresentadas!
-    </span>
+
 </body>
 </html>
