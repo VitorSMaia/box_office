@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Ticket;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,15 +13,19 @@ use Illuminate\Queue\SerializesModels;
 class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($ticket = null)
     {
-        //
+        if($ticket) {
+            $this->data = Ticket::query()->with(['event', 'user'])
+                ->where('ticket_number', $ticket)->get()->first();
+        }
     }
 
     /**
@@ -45,6 +50,7 @@ class SendEmail extends Mailable
     {
         return new Content(
             view: 'emails.send-tickets',
+            with: ['data' => $this->data]
         );
     }
 

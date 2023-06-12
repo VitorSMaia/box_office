@@ -35,17 +35,16 @@
 <body style="background-color: black">
 
 <main>
-    <p>Prezado(a) [Nome do usuário],</p>
+    <p>Prezado(a) {{ $data['user']['name'] }},</p>
 
     <p>Agradecemos por adquirir os ingressos para o tão aguardado Evento de Arte! É com grande prazer que informamos que sua compra foi concluída com sucesso. Agora, você está pronto para vivenciar uma experiência artística incrível!
     </p>
 
     <ul class="detailTicket">
         <li>Detalhes da compra:</li>
-        <li>Evento: Evento de Arte</li>
-        <li>Data: [Data do evento]</li>
-        <li>Horário: [Horário do evento]</li>
-        <li>Local: [Local do evento]</li>
+        <li>Evento: {{ $data['event']['name'] }}</li>
+        <li>Data: {{ formart_date($data['event_date']) }}</li>
+        <li>Horário: {{ $data['hour'] }}:00</li>
     </ul>
 
 

@@ -210,14 +210,6 @@ class EventController extends Controller
                 ->where('buy_date', null)
                 ->limit(1);
 
-//            if($ticketDB->count() < $validatorRequest[$key]['quantity']) {
-//                return [
-//                    'status' => 'error',
-//                    'code' => 200,
-//                    'data' => false,
-//                ];
-//            }
-
             $ticketDB->update([
                 'user_id' => Auth::user()->id,
                 'buy_date' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -225,8 +217,9 @@ class EventController extends Controller
                 'ticket_number' => $ticket_number
             ]);
 
-            Mail::to(Auth::user()->email)->send(new SendEmail());
+
             DB::commit();
+            Mail::to(Auth::user()->email)->send(new SendEmail($ticket_number));
             return [
                 'status' => 'success',
                 'code' => 200,
@@ -235,12 +228,9 @@ class EventController extends Controller
         }catch(\Exception $exception) {
             DB::rollBack();
             return [
-                'status' => 'fail'
+                'status' => 'error'
             ];
         }
-
-
-
     }
 
     private function generateNumberTicket($event_id) {
